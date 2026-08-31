@@ -41,6 +41,7 @@ if (Test-Path $ConfigFile) {
     }
 }
 
+
 # ========== MENU CREATION ==========
 Write-Host "--- Available GGUF Models ---" -ForegroundColor Cyan
 if ($HasHistory) 
@@ -50,19 +51,66 @@ if ($HasHistory)
 
 for ($i = 0; $i -lt $Models.Count; $i++) 
 {
-    Write-Host "[$($i + 1)] $($Models[$i])"
+    Write-Host "[" -NoNewline
+    Write-Host ($i + 1) -ForegroundColor Red -NoNewline
+    Write-Host "] -- $($Models[$i])"
+
 }
+Write-Host ""
 
 # ========== INPUT HANDLING ==========
-Write-Host ""
-$SelectionInput = Read-Host "Select an option number"
-
-# running into invalid [ref] usage...
-if (-not [int]::TryParse($SelectionInput, [ref]$Selection)) 
+$WrongCount = 0
+    # running into invalid [ref] usage...
+do 
 {
-    Write-Host "`$SelectionInput` is not a number. Please enter a number..." -ForegroundColor Red
-    Exit
-}
+    Write-Host "`rSelect an "-NoNewline
+    Write-Host "option " -ForegroundColor Red -NoNewline
+    Write-Host "number: " -noNewline
+    $SelectionInput = [System.Console]::ReadLine()
+    
+    $isValid = [int]::TryParse($SelectionInput, [ref]$Selection)
+    
+
+    if (-not $isValid) 
+    {
+        $WrongCount++
+
+        [System.Console]::SetCursorPosition(0, [System.Console]::CursorTop - 1)
+        Write-Host "`r'$SelectionInput' is not a number. Try again... " -ForegroundColor Red -NoNewline
+        Start-Sleep -Milliseconds 1250
+
+        if($WrongCount -eq 3)
+        {
+            Write-Host "with " -ForegroundColor Red -NoNewline
+            Start-Sleep -Milliseconds 500
+            Write-Host "a " -ForegroundColor Red -NoNewline
+            Start-Sleep -Milliseconds 750
+            Write-Host "N" -ForegroundColor Red -NoNewline
+            Start-Sleep -Milliseconds 200
+            Write-Host "U" -ForegroundColor Red -NoNewline
+            Start-Sleep -Milliseconds 200
+            Write-Host "M" -ForegroundColor Red -NoNewline
+            Start-Sleep -Milliseconds 200
+            Write-Host "B" -ForegroundColor Red -NoNewline
+            Start-Sleep -Milliseconds 200
+            Write-Host "E" -ForegroundColor Red -NoNewline
+            Start-Sleep -Milliseconds 200
+            Write-Host "R" -ForegroundColor Red -NoNewline
+            Start-Sleep -Milliseconds 333
+            Write-Host "." -ForegroundColor Red -NoNewline
+            Start-Sleep -Milliseconds 333
+            Write-Host "." -ForegroundColor Red -NoNewline
+            Start-Sleep -Milliseconds 333
+            Write-Host "." -ForegroundColor Red -NoNewline
+            Start-Sleep -Milliseconds 750
+        }
+
+        $clearLine = " " * ($SelectionInput.Length + 60)
+        Write-Host "`r$clearLine" -NoNewline
+
+    }
+
+} while (-not $isValid)
 
 # auto-selection
 if ($Selection -eq 0 -and $HasHistory) 
