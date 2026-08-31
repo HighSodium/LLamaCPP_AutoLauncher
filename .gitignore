@@ -1,0 +1,7 @@
+src/*
+!src/Put LLama.cpp and CUDA files here.txt
+
+models/*
+!models/Put GGUF files here.txt
+
+/config.json
