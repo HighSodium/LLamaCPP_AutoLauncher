@@ -1,0 +1,5 @@
+Be sure to use `ModelName.mmproj.gguf` for linked mmproj files
+
+OR
+
+`ModelName.mtp.gguf` for linked MTP files
