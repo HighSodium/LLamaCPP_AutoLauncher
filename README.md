@@ -19,7 +19,7 @@
 - Download and extract the llama.cpp CUDA/Vulkan/ARM files from the link above into the `src` folder
 
 ## Usage
-- Put GGUF model(s) in the `models` folder
+- Put GGUF model(s) in the `models` folder (https://huggingface.co/ is a good place to start finding models)
 - Run the `LAUNCHER.bat` file
 - Follow onscreen instructions
 - Profit
