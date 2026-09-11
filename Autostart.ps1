@@ -51,9 +51,11 @@ if ($HasHistory)
 
 for ($i = 0; $i -lt $Models.Count; $i++) 
 {
+    $FilePath = Join-Path $ModelsDir "$($Models[$i])"
+    $ModelSize = [Math]::Round((Get-Item $FilePath).Length / 1GB, 1)
     Write-Host "[" -NoNewline
     Write-Host ($i + 1) -ForegroundColor Red -NoNewline
-    Write-Host "] -- $($Models[$i])"
+    Write-Host "] - (${ModelSize} GB)`t -- $($Models[$i] -replace '\.gguf$')"
 
 }
 Write-Host ""
@@ -224,7 +226,7 @@ Write-Host "Model: $SelectedModel | Context: $ContextSize | Thinking: $Thinking 
 
 # ========== PARAM APPENDING ==========
 $Executable = Join-Path $ScriptDir "src\llama-server.exe"
-$Arguments = "-m \`"$ModelPath\`" --alias \`"$Alias\`" -c $ContextSize --reasoning $Thinking -ngl -1 --flash-attn on $ExtraArgs"
+$Arguments = "-m \`"$ModelPath\`" --alias \`"$Alias\`" -c $ContextSize --reasoning $Thinking -ngl -1 --tools all --flash-attn on $ExtraArgs"
 
 # ran into issue of llama.cpp not being there
 if (-not (Test-Path $Executable)) 
