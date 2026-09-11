@@ -36,3 +36,7 @@
 ### For models with separate MMPROJ files
 - Rename the file to match the model name plus `mmproj.gguf`
 - Example: `MyFunModel_iQ8_ALPHA.mmproj.gguf`
+
+### ROADMAP!
+- Add automatic MTP checking via metadata
+- Add advanced setup options during choices
